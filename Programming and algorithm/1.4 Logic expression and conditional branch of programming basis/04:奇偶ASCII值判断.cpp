@@ -14,6 +14,7 @@ A
 样例输出
 YES
 来源
+
 http://noi.openjudge.cn/ch0104/04/ */
 
 #include<bits/stdc++.h>

@@ -2,7 +2,8 @@
 
 总时间限制: 1000ms 内存限制: 65536kB
 描述
-两个整数a和b分别作为分子和分母，既分数 a/b ，求它的浮点数值（双精度浮点数，保留小数点后9位）
+两个整数a和b分别作为分子和分母，既分数 a/b ，
+求它的浮点数值（双精度浮点数，保留小数点后9位）
 
 输入
 输入仅一行，包括两个整数a和b（b不为0）
@@ -21,5 +22,6 @@ int main(){
     int a, b;
     cin>>a>>b;
     cout<<fixed<<setprecision(9)<<double(a)/b<<endl;
+    printf("%.9lf\n", double(a)/b);
     return 0;
 }

@@ -2,7 +2,7 @@
 
 总时间限制: 1000ms 内存限制: 65536kB
 描述
-给定非负整数n，求2n。
+给定非负整数n，求2^n (次方)。
 
 输入
 一个整数n。0 <= n < 31。
@@ -13,6 +13,10 @@
 样例输出
 8
 来源
+
+
+sqrt()
+pow(x,y) = x^y
 http://noi.openjudge.cn/ch0103/20/ */
 
 #include<bits/stdc++.h>

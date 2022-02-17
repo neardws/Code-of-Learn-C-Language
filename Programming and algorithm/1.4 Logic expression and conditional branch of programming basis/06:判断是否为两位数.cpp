@@ -12,8 +12,11 @@
 54
 样例输出
 1
+
 来源
 http://noi.openjudge.cn/ch0104/06/ */
+
+
 
 #include<bits/stdc++.h>
 using namespace std;

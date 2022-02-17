@@ -22,6 +22,7 @@ using namespace std;
 int main(){
     double a;
     cin>>a;
-    cout<<fixed<<setprecision(12)<<a;
+    cout<<fixed<<setprecision(12)<<a<<endl;
+    // printf("%.12lf\n", a);
     return 0;
 }

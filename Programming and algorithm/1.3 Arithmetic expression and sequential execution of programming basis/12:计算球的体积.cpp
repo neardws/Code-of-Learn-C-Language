@@ -1,8 +1,9 @@
 /* 12:计算球的体积
-
 总时间限制: 1000ms 内存限制: 65536kB
+
 描述
-对于半径为r的球，其体积的计算公式为V=4/3*πr3，这里取π= 3.14。
+对于半径为r的球，其体积的计算公式为V=4/3*πr^3，
+这里取π=3.14。
 
 现给定r，求V。
 
@@ -24,5 +25,6 @@ int main(){
     double pi = 3.14;
     cin>>r;
     cout<<fixed<<setprecision(2)<<double(4)/double(3)*pi*r*r*r<<endl;
+    printf("%.2lf", 4.0/3.0*pi*r*r*r)
     return 0;
 }

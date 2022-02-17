@@ -10,10 +10,12 @@
 如果N > 0, 输出positive;
 如果N = 0, 输出zero;
 如果N < 0, 输出negative
+
 样例输入
 1
 样例输出
 positive
+
 来源
 http://noi.openjudge.cn/ch0104/01/ */
 
@@ -24,7 +26,7 @@ int main(){
     cin>>a;
     if(a > 0)
         cout<<"positive\n";
-    else if (a == 0)
+    else if(a == 0)
         cout<<"zero\n";
     else
         cout<<"negative\n";

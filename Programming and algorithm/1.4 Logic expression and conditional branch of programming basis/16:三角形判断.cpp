@@ -13,6 +13,9 @@
 样例输出
 yes
 来源
+
+
+
 http://noi.openjudge.cn/ch0104/16/ */
 
 #include<bits/stdc++.h>

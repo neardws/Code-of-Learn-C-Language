@@ -13,6 +13,8 @@
 样例输出
 odd
 来源
+
+
 http://noi.openjudge.cn/ch0104/03/ */
 
 #include<bits/stdc++.h>

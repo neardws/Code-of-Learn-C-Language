@@ -2,7 +2,9 @@
 
 总时间限制: 1000ms 内存限制: 65536kB
 描述
-输入一个除空格以外的可见字符（保证在函数scanf中可使用格式说明符%c读入），输出其ASCII码。
+输入一个除空格以外的可见字符
+（保证在函数scanf中可使用格式说明符%c读入），
+输出其ASCII码。
 
 输入
 一个除空格以外的可见字符。
@@ -19,7 +21,8 @@ http://noi.openjudge.cn/ch0102/07/ */
 using namespace std;
 int main(){
     char a;
-    scanf("%c", &a);
+    // scanf("%c", &a);
+    cin>>a;
     printf("%d\n", a);
     return 0;
 }

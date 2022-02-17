@@ -22,6 +22,7 @@ using namespace std;
 int main(){
     float a;
     cin>>a;
-    cout<<fixed<<setprecision(3)<<a;
+    cout<<fixed<<setprecision(3)<<a<<endl;
+    printf("%.3f\n", a);
     return 0;
 }

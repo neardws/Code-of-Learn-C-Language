@@ -11,7 +11,8 @@ printf("%.9f %.9f\n", a, b);
 
 请问a和b分别是以下哪种类型？
 
-A. bool   B. char   C. short   D. int   E. float   F. double
+A. bool   B. char   C. short   D. int   
+E. float   F. double
 
 输入
 无。
