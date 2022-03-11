@@ -3,17 +3,16 @@ using namespace std;
 int main(){
     int n;
     cin>>n;
-    int a[n];
-    for(int i=0;i<n;i++)
-        cin>>a[i];
-    int sum = 0;
-    for(int i=0;i<n;i++){
-        for(int j=i+1;j<n;j++){
-            for(int k=0;k<n;k++)
-                if(a[i]+a[j] == a[k])
-                    sum++;
-        }
+    int a[1000001];
+    a[0]=1;
+    a[1]=1;
+    for(int i=2;i<=1000000;i++){
+        a[i]=(a[i-1]+a[i-2]) % 1000;
     }
-    cout<<sum<<endl;
+    while(n--){
+        int b;
+        cin>>b;
+        cout<<a[b]<<endl;
+    }
     return 0;
 }

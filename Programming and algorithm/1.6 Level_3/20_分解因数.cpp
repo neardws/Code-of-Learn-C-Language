@@ -22,23 +22,22 @@
 #include<bits/stdc++.h>
 using namespace std;
 int tot=0;
-void find(int a, int b){
-    for(int i=b;i<=a;++i){
-        if(a%i==0){     //找到可以被分解的数
+void find(int a,int b){
+    for(int i=b;i<=sqrt(a);++i){
+        if(a%i==0)//找到可以被分解的数
             find(a/i,i);
-        }
-        tot++;
     }
+    tot++;
 }
 int main(){
     int n;
     cin>>n;
-    while(n--){
+    for(int i=1;i<=n;i++){
+        tot=0;
         int a;
         cin>>a;
         find(a,2);
         cout<<tot<<endl;
-        tot=0;
     }
     return 0;
 }
