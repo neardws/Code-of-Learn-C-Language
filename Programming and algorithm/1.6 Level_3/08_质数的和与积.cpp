@@ -15,6 +15,8 @@
 // 《奥数典型题举一反三（小学五年级）》 (ISBN 978-7-5445-2882-5) 第三章 第二讲 例1
 // http://noi.openjudge.cn/ch0201/7827/
 
+
+
 #include<bits/stdc++.h>
 using namespace std;
 bool isPrime(int n){
