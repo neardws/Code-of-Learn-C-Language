@@ -84,6 +84,9 @@
         "unordered_set": "cpp",
         "utility": "cpp",
         "valarray": "cpp",
-        "vector": "cpp"
-    }
+        "vector": "cpp",
+        "codecvt": "cpp",
+        "shared_mutex": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
