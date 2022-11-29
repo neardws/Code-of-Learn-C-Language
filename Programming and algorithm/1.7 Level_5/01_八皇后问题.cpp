@@ -99,8 +99,8 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-int arr[8];
-int all = 0;
+int arr[8];     //存储皇后的位置，思考为什么一维数组就可以存储了呢
+int all = 0;    //表示目前解的个数
 void print() {  //输出
     all++;
     cout << "No. " << all << endl;
@@ -119,14 +119,14 @@ bool judge(int n) {  //判断是否可行
     return true;
 }
 void check(int n) {  //给棋子赋位置
-    if (n == 8) {
+    if (n == 8) {   // 找到一种可能解
         print();
         return;
     }
     for (int i = 0; i < 8; i++) {
-        arr[n] = i;
-        if (judge(n)) {
-            check(n + 1);
+        arr[n] = i;     // 给当前位置赋值
+        if (judge(n)) {     // 判断是否可行
+            check(n + 1);   // 递归调用，继续给下一个旗子赋位置
         }
     }
 }

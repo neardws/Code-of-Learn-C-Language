@@ -28,21 +28,21 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-int main()
-{
-	int a[20005],n,i,b,s=0,t=0;//a：奶牛高度 
-	cin>>n>>b;//输入n（奶牛数量）和b（书架高度） 
-	for(i=1;i<=n;i++)
-	cin>>a[i];//循环输入每只奶牛的高度 
-	sort(a+1,a+1+n,greater<int>());//给奶牛按高度倒序排序 
-	for(i=1;i<=n;i++)//循环n次 
-	{
-		s+=a[i];//累加奶牛高度 
-		t++;//累加奶牛数量 
-		if(s>=b)//如果奶牛高度>=书架高度 
-		{
-			cout<<t;//输出所用奶牛只数 
-			return 0;//结束程序 
+int main(){
+	int a[20005];	//a：奶牛高度 
+	int i; 		// 循环变量
+	int n, b;	// n 表示奶牛数量, b 表示书架高度
+	int s=0, t=0;   // s 为累加奶牛高度， t 为累加奶牛数量
+	cin>>n>>b;	//输入n（奶牛数量）和b（书架高度） 
+	for(i = 1; i <= n; i++)
+		cin>>a[i];//循环输入每只奶牛的高度 
+	sort(a + 1, a + 1 + n, greater<int>()); //给奶牛按高度倒序排序 
+	for(i = 1; i <= n; i++){	//循环n次 
+		s += a[i]; 		//累加奶牛高度 
+		t++;			//累加奶牛数量 
+		if(s >= b){		//如果奶牛高度>=书架高度 
+			cout<<t;	//输出所用奶牛只数 
+			return 0;	//结束程序 
 		}
 	}
 } 

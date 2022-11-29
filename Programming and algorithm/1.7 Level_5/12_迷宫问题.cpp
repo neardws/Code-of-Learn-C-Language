@@ -5,22 +5,15 @@
 // 定义一个二维数组： 
 
 // int maze[5][5] = {
-
 // 0, 1, 0, 0, 0,
-
 // 0, 1, 0, 1, 0,
-
 // 0, 0, 0, 0, 0,
-
 // 0, 1, 1, 1, 0,
-
 // 0, 0, 0, 1, 0,
-
 // };
 
-// 它表示一个迷宫，其中的1表示墙壁，0表示可以走的路，只能横着走或竖着走，不能斜着走，要求编程序找出从左上角到右下角的最短路线。
-
-
+// 它表示一个迷宫，其中的1表示墙壁，0表示可以走的路，
+// 只能横着走或竖着走，不能斜着走，要求编程序找出从左上角到右下角的最短路线。
 
 // 输入
 // 一个5 × 5的二维数组，表示一个迷宫。数据保证有唯一解。
@@ -43,52 +36,51 @@
 // (3, 4)
 // (4, 4)
 
-
-
 #include<bits/stdc++.h>
 using namespace std;
-struct aa
-{
-	int x,y,f;
-}q[123];
-int main()
-{
-	int i,k=0,j,tx,ty,dx[4]={-1,1,0,0},dy[4]={0,0,-1,1},head=0,tail=1,a[5][5],v[5][5]={0},answer[30][3];
-	for(i=0;i<=4;i++)
-        for(j=0;j<=4;j++)
-            cin>>a[i][j];
-	q[1].x=0;
-	q[1].y=0;
-	q[1].f=0;
-	v[0][0]=1;
-	head=0;
-	tail=1;
-	while(head<tail)
-	{
-		head++;
-		for(i=0;i<4;i++)
-		{
-			tx=dx[i]+q[head].x;
-			ty=dy[i]+q[head].y;
-			if(tx>=0&&ty>=0&&tx<=4&&ty<=4&&a[tx][ty]!=1&&v[tx][ty]==0)
-			{
-				tail++;
-				q[tail].x=tx;
-				q[tail].y=ty;
-				q[tail].f=head;
-				v[tx][ty]=1;
-				if(tx==4&&ty==4)
-				{
-					while(tail!=0)
-					{
+struct aa{	// 结构体 
+	int x, y, f;	// 节点位置与指向前一个节点的指针
+}q[123]; 	// q 数组表示队列
+int main(){
+	int k = 0, tx, ty;
+	int dx[4] = {-1, 1, 0, 0}, dy[4] = {0, 0, -1, 1};
+	// 上下左右 四个方向
+	int head = 0, tail = 1;
+	int a[5][5]; 	// 地图
+	int v[5][5] = {0};	// 是否访问
+	int answer[30][3];
+	for(int i = 0; i <= 4; i++)
+        for(int j = 0; j <= 4; j++)
+            cin>>a[i][j];	// 输入地图信息
+	// 起始点为左上角
+	q[1].x = 0;
+	q[1].y = 0;
+	q[1].f = 0;
+	v[0][0] = 1;
+	head = 0; 	// 头指针
+	tail = 1;	// 尾指针
+	while(head < tail){
+		head++;	// 取下一个元素
+		for(int i = 0; i < 4; i++){		// 遍历4个方向
+			tx = dx[i] + q[head].x;
+			ty = dy[i] + q[head].y;
+			if(tx >= 0 && ty >= 0 && tx <= 4 && ty <= 4 
+				&& a[tx][ty] != 1 && v[tx][ty] == 0){
+				// 新位置在地图范围内，同时可走且未走过
+				tail++;	// 尾指针增加，将新位置入队
+				q[tail].x = tx;
+				q[tail].y = ty;
+				q[tail].f = head;  // 指向前一个节点
+				v[tx][ty] = 1;
+				if(tx == 4 && ty == 4){  // 到达了右下角的目标点
+					while(tail != 0){	 // 尾指针不为空
 						k++;
-						answer[k][1]=q[tail].x;
-						answer[k][2]=q[tail].y;
-						tail=q[tail].f;
+						answer[k][1] = q[tail].x;
+						answer[k][2] = q[tail].y;
+						tail = q[tail].f;
 					}
-					for(j=k;j!=0;j--)
-					{
-						printf("(%d, %d)",answer[j][1],answer[j][2]);
+					for(int j = k; j != 0; j--){	// 倒序输出
+						printf("(%d, %d)", answer[j][1], answer[j][2]);
 						cout<<endl;
 					}
 					return 0;

@@ -38,20 +38,21 @@
 #include<bits/stdc++.h>
 using namespace std;
 //首先是要想到把同一列看做一个数，然后对一行数据求最大连续和 
-int n,a[110][110],b[110];
-int dp[110],res=0;
-void f(int x,int y){
-    for(int i=1;i<=n;i++){
-        b[i]=0; dp[i]=0;
-        for(int e=x;e<=y;e++){
+int n, a[110][110], b[110];
+int dp[110], res = 0; // res 表示 最大的矩阵和
+void f(int x, int y){
+    for(int i = 1; i <= n; i++){   // 列数
+        b[i] = 0;  // b[i] 表示 当前这列的和
+        dp[i] = 0;  // dp[i] 表示 加到第 i 列的矩阵和
+        for(int e = x; e <= y; e++){
             //把从第x行到第y行的第i列是数看做一个数
-            b[i]+=a[e][i]; 
+            b[i] += a[e][i];   
         } 
-        dp[i]=b[i];//初始化 
-        if(dp[i-1]>0){
-            dp[i]=max(dp[i],dp[i-1]+b[i]);
+        dp[i] = b[i]; //初始化 
+        if(dp[i-1] > 0){
+            dp[i] = max(dp[i], dp[i-1] + b[i]);
         }
-        res=max(res,dp[i]);
+        res = max(res, dp[i]);
     }
 }
 int main(){
@@ -61,10 +62,10 @@ int main(){
             cin>>a[i][j];
         }
     }
-    for(int i=1;i<=n;i++){
-        for(int j=i;j<=n;j++){
+    for(int i = 1; i <= n; i++){
+        for(int j = i; j <= n; j++){
             //把同一列的看做是一个数 
-            f(i,j);
+            f(i, j);    
         }
     }
     cout<<res<<endl;

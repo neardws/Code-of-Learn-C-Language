@@ -8,7 +8,8 @@
 // 编程找出所有的极大点，按照x坐标由小到大，输出极大点的坐标。
 // 本题规定：n不超过100，并且不考虑点的坐标为负数的情况。
 // 输入
-// 输入包括两行，第一行是正整数n，表示是点数，第二行包含n个点的坐标，坐标值都是整数，坐标范围从0到100，输入数据中不存在坐标相同的点。
+// 输入包括两行，第一行是正整数n，表示是点数，
+// 第二行包含n个点的坐标，坐标值都是整数，坐标范围从0到100，输入数据中不存在坐标相同的点。
 // 输出
 // 按x轴坐标最小到大的顺序输出所有极大点。
 // 输出格式为:(x1,y1),(x2,y2),...(xk,yk)
@@ -22,39 +23,39 @@
 #include<bits/stdc++.h>
 using namespace std;
 //挺简单的，就是枚举每个点判断是否会被覆盖 
-struct zb{
-    int x,y;
+struct zb{  //结构体 存储 点的位置
+    int x, y;
 };
-int n,k=0;
-zb a[110],b[110];
-bool cmp(zb c,zb d){
-    return c.x<d.x||(c.x==d.x&&c.y<d.y);
+int n, k = 0;    // n 为点数，k 为极大点个数
+zb a[110], b[110];
+bool cmp(zb c, zb d){       // 自定义比较函数
+    return c.x < d.x || (c.x == d.x && c.y < d.y);
 }
 int main(){
-    cin>>n;
-    for(int i=0;i<n;i++){
-        cin>>a[i].x>>a[i].y;
+    cin>>n;     // 输入点数
+    for(int i = 0; i < n; i++){
+        cin>>a[i].x>>a[i].y;    // 输入 点的坐标
     }
-    sort(a,a+n,cmp);
-    for(int i=0;i<n;i++){
-        int flag=1;
-        for(int j=0;j<n;j++){
-            if(i!=j){
-                if(a[i].x<=a[j].x&&a[i].y<=a[j].y){
-                    flag=0;
+    sort(a, a + n, cmp);    // 降序排序
+    for(int i = 0; i < n; i++){    // 遍历寻找极大点
+        int flag = 1;    // 默认为极大点
+        for(int j = 0; j < n; j++){
+            if(i != j){
+                if(a[i].x <= a[j].x && a[i].y <= a[j].y){   // 找到比 i 大的点
+                    flag = 0;
                     break;
                 }
             }
         }
-        if(flag){
-            b[k].x=a[i].x;
-            b[k].y=a[i].y;
+        if(flag){   
+            b[k].x = a[i].x;    // 存储极大点信息
+            b[k].y = a[i].y;
             k++;
         }
     }
-    for(int i=0;i<k-1;i++){
-        printf("(%d,%d),",b[i].x,b[i].y);
+    for(int i = 0; i < k-1; i++){   // 输出
+        printf("(%d,%d),", b[i].x, b[i].y);
     }
-    printf("(%d,%d)\n",b[k-1].x,b[k-1].y);
+    printf("(%d,%d)\n", b[k-1].x, b[k-1].y);
     return 0;
 }

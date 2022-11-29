@@ -29,69 +29,75 @@ using namespace std ;
 
 const int HASH = 9 ;
 char ss[71] ;
-int have[11] , n ;
+int have[11], n ;
 long long base[11] ;
-set< long long  > s ;
+set< long long > s;  // long long 类型的 set 容器
 
-void Init( )
-{
-    int m = strlen( ss ) ; n = 0 ;
+void Init( ) {
+    int m = strlen( ss ) ;      // 字符串长度
+    n = 0 ;     // 数字的个数
     memset( have , 0 , sizeof(have) ) ;
-    for( int i = 0 ; i < m ; ++i )
-    {
-        if( ss[i] < '0' || ss[i] > '9' ) continue ;
-        ++have[ss[i]-'0']  , ++n ;
+    for( int i = 0 ; i < m ; ++i ){
+        if( ss[i] < '0' || ss[i] > '9' )    // 不是数字
+            continue ;
+        ++have[ss[i]-'0'] , ++n ;  // have 为 每种数字的数量， n 为总数量
     }
-
 }
 
-bool dfs( int now , bool er , long long sta )
-{
-    if( s.find( sta ) != s.end( ) ) return 0 ;
-    while( !have[now] && now <= 9 ) ++now ;
-    if( now == 10 ) return er ;
-    if( have[now] && have[now+1] && have[now+2] )
-    {
-        --have[now] , --have[now+1] , --have[now+2] ;
-        if( dfs( now+1 , er , sta - base[now] - base[now+1] - base[now+2] ) ) return 1 ;
-        ++have[now] , ++have[now+1] , ++have[now+2] ;
+bool dfs( int now , bool er , long long sta ) {
+    // now 遍历到第几种数字  er 为是否能胡   sta 为当前状态
+    if( s.find( sta ) != s.end( ) ) 
+        return 0 ;
+    while( !have[now] && now <= 9 ) 
+        ++now ;
+    if( now == 10 )   // 遍历到最后一种数字
+        return er ;
+    if( have[now] && have[now+1] && have[now+2] ){  // 满足一组 递增 例如，4，5，6
+        --have[now] , --have[now+1] , --have[now+2] ;   // 相应减去
+        if( dfs( now+1 , er , sta - base[now] - base[now+1] - base[now+2] ) ) 
+            return 1 ;
+        ++have[now] , ++have[now+1] , ++have[now+2] ;  // 回溯
     }
-    if( have[now] >= 3 )
-    {
-        have[now] -= 3 ;
-        if( dfs( now+1 , er , sta - base[now]*3 ) ) return 1 ;
+    if( have[now] >= 3 ){   // 满足一组 3个相同， 例如 3，3，3
+        have[now] -= 3 ;    
+        if( dfs( now+1 , er , sta - base[now]*3 ) ) 
+            return 1 ;
         have[now] += 3 ;
     }
-    if( have[now] >= 2 && (!er) )
-    {
+    if( have[now] >= 2 && (!er) ){  // 满足一对， 例如，6，6
         have[now] -= 2 ;
-        if( dfs( now+1 , 1 , sta - base[now]*2 ) ) return 1 ;
+        if( dfs( now+1 , 1 , sta - base[now]*2 ) ) 
+            return 1 ;
         have[now] += 2 ;
     }
-    s.insert( sta ) ;
+    s.insert( sta ) ;   // 将该状态加到 set 中
     return false ;
-
 }
 
-void Solve( )
-{
-    if( ( n - 2 ) % 3 ) { puts( "XIANGGONG" ) ; return ; }
-    s.clear( ) ; long long sta = 0ll ;
-    for( int i = 1 ; i <= 9 ; ++i ) sta += have[i] * base[i] ;
-    if( dfs( 1 , 0 , sta ) ) puts( "HU" ) ; else puts( "BUHU" ) ;
+void Solve( ){
+    if( ( n - 2 ) % 3 ) {   // 不等于0，相公
+        puts( "XIANGGONG" ) ; return ; }
+    s.clear( ) ; 
+    long long sta = 0ll ;   // 状态信息
+    for( int i = 1 ; i <= 9 ; ++i ) 
+        sta += have[i] * base[i] ;  
+    if( dfs( 1 , 0 , sta ) ) 
+        puts( "HU" ) ; 
+    else 
+        puts( "BUHU" ) ;
 }
 
-int main( )
-{
+int main( ){
     base[1] = 1 ;
-    for( int i = 2 ; i <= 9 ; ++ i ) base[i] = base[i-1] * HASH;
-    while( 1 )
-    {
+    for( int i = 2 ; i <= 9 ; ++ i ) 
+        base[i] = base[i-1] * HASH;
+    // base = {1, 9, 81, ...}
+    while( 1 ) {
         cin.getline( ss , 56 ) ;
-        if( ss[0] == '0' ) break ;
+        if( ss[0] == '0' ) 
+            break ;
         Init( ) ;
         Solve( ) ;
     }
-
     return 0 ;
 }

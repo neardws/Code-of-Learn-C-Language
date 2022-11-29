@@ -1,7 +1,8 @@
 // 问题求解
 // 给定一个正整数N，求最小的M满足比N大且M与N的二进制表示中有相同数目的1。
 
-// 举个例子，假如给定N为78，二进制表示为1001110，包含4个1，那么最小的比N大的并且二进制表示中只包含4个1的数是83，
+// 举个例子，假如给定N为78，二进制表示为1001110，包含4个1，
+// 那么最小的比N大的并且二进制表示中只包含4个1的数是83，
 // 其二进制是1010011，因此83就是答案。
 
 // 时间限制：1000
@@ -26,31 +27,23 @@
 
 #include<bits/stdc++.h>
 using namespace std; 
-int a[1000];
-int onecheck(int a)
-{
-    int j,i=~0,count=0;
-    i=a&i;
-    for(j=0;j<30;j++)
-    {
-        if(i%2==1)count++;
-        i/=2;
+int onecheck(int a) {   // 判断数字a 二进制中 1的数量
+    int count = 0;  // 记录 1 的个数
+    while(a != 0){
+        a = a & (a - 1);   // & 运算，例如 111&110=110，110&101=100，100&011=000
+        count++;
     }
-    return count;
+    return count;   // 返回二进制中1的数量
 }
 
-int main()
-{
-    int i,j;
-    while(cin>>i&&i!=0)
-    {
-        for(j=i+1;;j++)
-        {
-        if(onecheck(i)==onecheck(j))
-        {
-            cout<<j<<endl;
-            break;
-        }
+int main() {
+    int i, j;
+    while(cin>>i && i != 0){    // 输入N 值
+        for(j = i + 1; ; j++){  // 从N+1 开始遍历
+            if(onecheck(i) == onecheck(j)){ // 如果1的数量相同
+                cout<<j<<endl;
+                break;
+            }
         }
     }
     return 0;

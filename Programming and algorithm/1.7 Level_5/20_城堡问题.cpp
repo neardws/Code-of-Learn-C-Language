@@ -24,7 +24,9 @@
 // 输入
 // 程序从标准输入设备读入数据。第1、2行每行1个整数，分别是南北向、东西向的方块数。
 // 在接下来的输入行里，每个方块用一个数字(0≤p≤50)描述。
-// 用一个数字表示方块周围的墙，1表示西墙，2表示北墙，4表示东墙，8表示南墙。
+// 用一个数字表示方块周围的墙，1表示西墙（0001），2表示北墙（0010），4表示东墙（0100），8表示南墙（1000）。
+// （0001）& 0001
+
 // 每个方块用代表其周围墙的数字之和表示。城堡的内墙被计算两次，方块(1,1)的南墙同时也是方块(2,1)的北墙。输入的数据保证城堡至少有两个房间。
 // 输出
 // 输出2行，每行一个数，表示城堡的房间数、城堡中最大房间所包括的方块数。结果显示在标准输出设备上。
@@ -43,31 +45,34 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-int room[55][55],num[55][55];//num[]：区分找过以及未找过的房间+标记找过的房间（每个区域房间有不同的值） 
-int rnum=0,maxr=0,rarea;
-void dfs(int i,int j){
-	if(num[i][j]) return;//如果查找过就没必要找了 
-	++rarea;//没找过就多一个小房间 
-	num[i][j]=rnum;//标记此时查找的房间 
-	if((room[i][j]&1)==0) dfs(i,j-1);//西边没墙向西（左）找 
-	if((room[i][j]&2)==0) dfs(i-1,j);//北边没墙向北（上）找 
-	if((room[i][j]&4)==0) dfs(i,j+1);//东边没墙向东（右）找
-	if((room[i][j]&8)==0) dfs(i+1,j);//南边没墙向南（下）找
+int room[55][55];
+int num[55][55]; // num[]：区分找过以及未找过的房间+标记找过的房间（每个区域房间有不同的值） 
+int rnum = 0, maxr = 0, rarea;
+void dfs(int i, int j){
+	if(num[i][j]) 
+		return;   //  如果查找过就没必要找了 
+	++rarea; //  没找过就多一个小房间 
+	num[i][j] = rnum;  //  标记此时查找的房间 
+	// & 与位运算   room[i][j] （1110）& 0010 = 0   
+	if((room[i][j] & 1)==0) dfs(i, j - 1); //西边没墙向西（左）找 
+	if((room[i][j] & 2)==0) dfs(i - 1, j); //北边没墙向北（上）找 
+	if((room[i][j] & 4)==0) dfs(i, j + 1); //东边没墙向东（右）找
+	if((room[i][j] & 8)==0) dfs(i + 1, j); //南边没墙向南（下）找
 }
 int main(){
-	int r,c;
-	scanf("%d%d",&r,&c);
-	for(int i=1;i<=r;i++)
-		for(int j=1;j<=c;j++)
-			scanf("%d",&room[i][j]);
-	memset(num,0,sizeof(num));//初始化num[]里面一开始没有数值 
-	for(int i=1;i<=r;i++)
-		for(int j=1;j<=c;j++){
-			if(!num[i][j]){//如果房间没有被找过 
-				++rnum;//标记房间的号码值 +查找联通房间总数 
-				rarea=0;//初始化，为了后面dfs()查找联通的房间数量 
-				dfs(i,j);
-				maxr=max(rarea,maxr);//区域最大的房间数量 
+	int r, c;	// 地图大小
+	scanf("%d%d", &r, &c);
+	for(int i = 1; i <= r; i++)
+		for(int j = 1; j <= c; j++)
+			scanf("%d", &room[i][j]); // 方块墙的信息
+	memset(num, 0, sizeof(num));	//初始化num[]里面一开始没有数值 
+	for(int i = 1; i <= r; i++)
+		for(int j = 1; j <= c; j++){
+			if(!num[i][j]){		//如果房间没有被找过 
+				++rnum;		//标记房间的号码值 +查找联通房间总数 
+				rarea = 0;	//初始化，为了后面dfs()查找联通的房间数量 
+				dfs(i, j);
+				maxr = max(rarea, maxr);  //区域最大的房间数量 
 			}
 		}
 	printf("%d\n",rnum);

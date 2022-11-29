@@ -3,7 +3,8 @@
 // 总时间限制: 1000ms 内存限制: 65536kB
 // 描述
 // 圣诞节来临了，在城市A中圣诞老人准备分发糖果，现在有多箱不同的糖果，每箱糖果有自己的价值和重量，
-// 每箱糖果都可以拆分成任意散装组合带走。圣诞老人的驯鹿最多只能承受一定重量的糖果，请问圣诞老人最多能带走多大价值的糖果。
+// 每箱糖果都可以拆分成任意散装组合带走。圣诞老人的驯鹿最多只能承受一定重量的糖果，
+// 请问圣诞老人最多能带走多大价值的糖果。
 
 // 输入
 // 第一行由两个部分组成，分别为糖果箱数正整数n(1 <= n <= 100)，驯鹿能承受的最大重量正整数w（0 < w < 10000），两个数用空格隔开。
@@ -27,37 +28,36 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const double eps = 1e-6;
+const double eps = 1e-6;	// eps 为一个非常小的数
 
 struct Candy{
-	int v;
-	int w;
-	bool operator <  (const Candy & c) const{
-		return double(v)/w - double(c.v)/c.w > eps;
+	int v;		// 价值
+	int w;		// 重量
+	bool operator <  (const Candy & c) const{	// 根据单价进行排序
+		return double(v)/w - double(c.v)/c.w > eps;		// 注意 eps 的使用
 	}
-} candies[110];
+} candies[110];	// 糖果数组
 
-int main()
-{
-	int n,w;
+int main() {
+	int n, w;	// 糖果箱数量，驯鹿载重
 	cin >> n >> w;
-	for(int i = 0;i < n;++i){
-		cin >> candies[i].v >> candies[i].w;
+	for(int i = 0; i < n; ++i){	
+		cin >> candies[i].v >> candies[i].w;	// 输入每箱糖果的价值与重量
 	}
-	sort(candies,candies + n);	//大到小排序 
-	int totalW = 0; 
-	double totalV = 0;
-	for(int i = 0;i <n;++i){
-		if(totalW + candies[i].w <= w){
+	sort(candies, candies + n);	//大到小排序 
+	int totalW = 0; 	// 当前载重
+	double totalV = 0;	// 当前价值
+	for(int i = 0; i < n; ++i){		// 从价值大的糖果开始装
+		if(totalW + candies[i].w <= w){	// 能装下
 			totalV += candies[i].v;
 			totalW += candies[i].w;
 		}
-		else{
+		else{	// 不能装下，则全装满
 			totalV += candies[i].v * (double(w - totalW) / candies[i].w);
 			break;
 		}
 	}
-	printf("%.1f",totalV);
+	printf("%.1f", totalV);	// 格式化输出
 	return 0;
 }
 

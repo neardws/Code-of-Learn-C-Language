@@ -6,7 +6,8 @@
 // 今天它要挑战一个非常大的迷宫，研究员们为了鼓励阿尔吉侬尽快到达终点，就在终点放了一块阿尔吉侬最喜欢的奶酪。
 // 现在研究员们想知道，如果阿尔吉侬足够聪明，它最少需要多少时间就能吃到奶酪。
 
-// 迷宫用一个R×C的字符矩阵来表示。字符S表示阿尔吉侬所在的位置，字符E表示奶酪所在的位置，字符#表示墙壁，字符.表示可以通行。
+// 迷宫用一个R×C的字符矩阵来表示。
+// 字符S表示阿尔吉侬所在的位置，字符E表示奶酪所在的位置，字符#表示墙壁，字符.表示可以通行。
 // 阿尔吉侬在1个单位时间内可以从当前的位置走到它上下左右四个方向上的任意一个位置，但不能走出地图边界。
 
 // 输入
@@ -37,62 +38,58 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-int R,C,T,BeginX,BeginY,EndX,EndY;
-char Map[205][205];
-int dx[] = {1,-1,0,0};
+int R, C, T;            // 地图大小
+int BeginX, BeginY;     // 起点
+int EndX, EndY;         // 终点
+char Map[205][205];     // 地图
+int dx[] = {1,-1,0,0};  // 4个方向
 int dy[] = {0,0,1,-1};
-int visited[205][205];
-struct node
-{
-    int x,y,step;
-    node(int xx=0,int yy=0,int ss=0):x(xx),y(yy),step(ss){}
+int visited[205][205];  // 是否访问
+struct node{
+    int x, y, step; // 位置 与 步数
+    node(int xx = 0, int yy = 0, int ss = 0): x(xx), y(yy), step(ss){}  
+    // 构造函数，具有默认参数值
 };
-queue <node> q;
-void Bfs()
-{
-    q.push( node( BeginX, BeginY, 0) );
-    visited[BeginX][BeginY] = 1;
-    while( !q.empty() )
-    {
-        node now = q.front();
-        q.pop();
-        int NowX = now.x; int NowY = now.y; int NowStep = now.step;
-        if( NowX == EndX && NowY == EndY )
-        {
-            cout << NowStep << endl;
+queue <node> q;     // 队列
+void Bfs() {    // 宽度优先搜索
+    q.push( node( BeginX, BeginY, 0) );     // 起点入队
+    visited[BeginX][BeginY] = 1;    // 起点已访问
+    while( !q.empty() ) {   // 队列不为空
+        node now = q.front();   // 取队首
+        q.pop();    // 出队
+        int NowX = now.x; 
+        int NowY = now.y; 
+        int NowStep = now.step;
+        if( NowX == EndX && NowY == EndY ) {   // 到达终点
+            cout << NowStep << endl;    // 输出步数
             return;
         }
-        for( int i = 0; i < 4; i++ )
-        {
-            int NextX = NowX + dx[i]; int NextY = NowY + dy[i];
-            if( !visited[NextX][NextY] && Map[NextX][NextY] != '#' )
-                {
-                    q.push( node( NextX, NextY, NowStep + 1));
-                    visited[NextX][NextY] = 1;
-                }
+        for( int i = 0; i < 4; i++ ) {  // 遍历4个方向
+            int NextX = NowX + dx[i];  // 得到新位置
+            int NextY = NowY + dy[i];
+            if( !visited[NextX][NextY] && Map[NextX][NextY] != '#' ){
+                // 未访问 且 不等于 墙
+                q.push( node( NextX, NextY, NowStep + 1)); // 入队
+                visited[NextX][NextY] = 1; // 已访问
+            }
         }
     }
-    cout << "oop!" << endl;
+    cout << "oop!" << endl; // 无法吃到奶酪
 }
-int main()
-{
-    cin >> T;
-    while( T-- )
-    {
-        cin >> R >> C;
-        memset(Map, 0, sizeof(Map));
+int main(){
+    cin >> T;   // 测试组数
+    while( T-- ){
+        cin >> R >> C;  // 地图大小
+        memset(Map, 0, sizeof(Map));    // 初始化
         memset(visited, 0, sizeof(visited));
         for( int i = 1; i <= R; i++ )
-            for( int j = 1; j <= C; j++ )
-            {
+            for( int j = 1; j <= C; j++ ){
                 cin >> Map[i][j];
-                if( Map[i][j] == 'S' )
-                {
+                if( Map[i][j] == 'S' ){ // 起点
                     BeginX = i;
                     BeginY = j;
                 }
-                if( Map[i][j] == 'E' )
-                {
+                if( Map[i][j] == 'E' ){ // 终点
                     EndX = i;
                     EndY = j;
                 }
@@ -100,9 +97,9 @@ int main()
         for( int i = 0; i <= R+1; i++ )
             for( int j = 0; j <= C+1; j++ )
                 if( i==0 || j==0 || i==R+1 || j==C+1 )
-                    Map[i][j] = '#';
+                    Map[i][j] = '#';    // 地图4周为墙
         while( !q.empty() )
-            q.pop();
+            q.pop();    // 清空队列
         Bfs();
     }
     return 0;

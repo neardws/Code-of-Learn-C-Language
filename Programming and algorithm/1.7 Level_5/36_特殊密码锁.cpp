@@ -22,59 +22,52 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-string obj,ori,tep;
-int cnt1,cnt2,n;
+string obj, ori, tep;
+int cnt1, cnt2, n;
 
-void flip(int i)						//改变按钮状态 
-{
+void flip(int i){						//改变按钮状态 
 	tep[i]^=1;							//0^1=1  1^1=0
 }
 
-int check()						
-{
-	int cnt=0;
-	for(int i=0;i<n-2;i++)				//循环判断 
-	{
-		if(tep[i]!=obj[i])
-		{
+int check() {
+	int cnt = 0;
+	for(int i = 0; i < n - 2; i++){		//循环判断 
+		if(tep[i] != obj[i]){
 			cnt++;						//不同则计数加一 
-			flip(i+1);					//按动不同的后一个 
-			flip(i+2);					//改变按动的后一个 
+			flip(i + 1);				//按动不同的后一个 
+			flip(i + 2);				//改变按动的后一个 
 		}
 	}
-	if(tep[n-2]!=obj[n-2])				//防止数组越界 单独判断倒数第二个 
-	{
+	if(tep[n-2] != obj[n-2]) {			//防止数组越界 单独判断倒数第二个 
 		cnt++;
-		flip(n-1);
+		flip(n - 1);
 	}
-	if(tep[n-1]!=obj[n-1])				//前面的已经确定，最后一个不能更改 
-		cnt=1e5;						//若最后一个不同，则该方案不可行 
+	if(tep[n-1] != obj[n-1])			//前面的已经确定，最后一个不能更改 
+		cnt = 1e5;						//若最后一个不同，则该方案不可行 
 	return cnt;
 }
 
-int main()
-{
-	cin>>ori>>obj;
-	n=ori.length();
-	if(n==1)
-	{
-		if(ori==obj)					//长度为1的单独判断 
+int main() {
+	cin>>ori>>obj;		// 输入原始和目标密码
+	n = ori.length();	// 密码长度
+	if(n == 1) {
+		if(ori == obj)					//长度为1的单独判断 
 			cout<<0;
 		else
 			cout<<1;
 		return 0;						//直接返回，不需后面操作 
 	}
-	tep=ori;							//复制初始状态 
+	tep = ori;							//复制初始状态 
 	cnt1++;
 	flip(1);							//改变第二个 
 	flip(0); 							//改变第一个 
-	cnt1+=check();						//第一种情况 
-	tep=ori; 							//恢复初始状态 
-	cnt2=check();						//第二种情况 
-	int ans=1e5;						//答案输出 
-	ans=min(ans,cnt1);
-	ans=min(ans,cnt2);
-	if(ans<100)
+	cnt1 += check();					//第一种情况 
+	tep = ori; 							//恢复初始状态 
+	cnt2 = check();						//第二种情况 
+	int ans = 1e5;						//答案输出 
+	ans = min(ans, cnt1);
+	ans = min(ans, cnt2);
+	if(ans < 100)
 		cout<<ans;
 	else
 		cout<<"impossible";

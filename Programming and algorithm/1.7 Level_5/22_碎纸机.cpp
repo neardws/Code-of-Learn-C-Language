@@ -2,13 +2,15 @@
 // 查看 提交 统计 提问
 // 总时间限制: 1000ms 内存限制: 65536kB
 // 描述
-// 你现在负责设计一种新式的碎纸机。一般的碎纸机会把纸切成小片，变得难以阅读。而你设计的新式的碎纸机有以下的特点：
+// 你现在负责设计一种新式的碎纸机。一般的碎纸机会把纸切成小片，变得难以阅读。
+// 而你设计的新式的碎纸机有以下的特点：
 
 // 1.每次切割之前，先要给定碎纸机一个目标数，而且在每张被送入碎纸机的纸片上也需要包含一个数。
 // 2.碎纸机切出的每个纸片上都包括一个数。
 // 3.要求切出的每个纸片上的数的和要不大于目标数而且与目标数最接近。
 
-// 举一个例子，如下图，假设目标数是50，输入纸片上的数是12346。碎纸机会把纸片切成4块，分别包含1，2，34和6。
+// 举一个例子，如下图，假设目标数是50，输入纸片上的数是12346。
+// 碎纸机会把纸片切成4块，分别包含1，2，34和6。
 // 这样这些数的和是43 (= 1 + 2 + 34 + 6)，这是所有的分割方式中，不超过50，而又最接近50的分割方式。
 // 又比如，分割成1，23，4和6是不正确的，因为这样的总和是34 (= 1 + 23 + 4 + 6)，比刚才得到的结果43小。
 // 分割成12，34和6也是不正确的，因为这时的总和是52 (= 12 + 34 + 6)，超过了50。
@@ -17,7 +19,8 @@
 // 1.如果目标数和输入纸片上的数相同，那么纸片不进行切割。
 // 2.如果不论怎样切割，分割得到的纸片上数的和都大于目标数，那么打印机显示错误信息。
 // 3.如果有多种不同的切割方式可以得到相同的最优结果。那么打印机显示拒绝服务信息。
-// 比如，如果目标数是15，输入纸片上的数是111，那么有两种不同的方式可以得到最优解，分别是切割成1和11或者切割成11和1，
+// 比如，如果目标数是15，输入纸片上的数是111，
+// 那么有两种不同的方式可以得到最优解，分别是切割成1和11或者切割成11和1，
 // 在这种情况下，打印机会显示拒绝服务信息。
 
 // 为了设计这样的一个碎纸机，你需要先写一个简单的程序模拟这个打印机的工作。
@@ -67,52 +70,56 @@
 
 #include<bits/stdc++.h> 
 using namespace std;
-map<int, string> mp; //最小差值 → 切分结果
-int type;  		//映射到不同的输出类型
-int minDiff;  //求得的和与目标数的最小差值
-void dfs(int total, int start, string& s, int n,string& cur){
+map<int, string> mp; //  最小差值 → 切分结果
+int type;  		//  映射到不同的输出类型
+int minDiff;  	//  求得的和与目标数的最小差值
+void dfs(int total, int start, string& s, int n, string& cur){
+	// total 为 切分后的和，start 为切分的起始位置
+	// s 为需要切分的字符串，n 为目标和
+	// cur 为当前的切分方案
 	if(total > n){  //边界条件1：total>n，显然已经不符合要求
 		return;
 	}
 	if(start == s.size()){ //边界条件2：start已经到原字符串的最后了，即原字符串已经全都枚举完毕 
-		if(n-total < minDiff){
-			minDiff = n-total;
+		if(n - total < minDiff){	// 求得的和与目标数的差值比最小差值还小
+			minDiff = n - total;	// 更新最小差值
 			type = 1;  //当前最小值有一个解
 			mp[minDiff] = cur;  //记录到map中
-		}else if(n-total== minDiff){
+		}else if(n - total == minDiff){
 			type = 2;  //当前最小值不止一个解
 		}
 		return;
 	}
 	//对于要处理的字符串，每次从start处截取长度为l的一段，剩余的字符串再DFS
 	//l的大小从1一直到s.size()-start
-	for(int l = 1;l<=s.size()-start;++l){
-		int it = stoi(s.substr(start,l));  //string转int
+	for(int l = 1; l <= s.size() - start; ++l){
+		int it = stoi(s.substr(start, l));  //string转int
 		string st = cur;
 		st += " ";
-		st += s.substr(start,l);
-		dfs(total+it, start+l, s, n,st);	
+		st += s.substr(start, l);
+		dfs(total + it, start + l, s, n, st);	
 	}
 }
 int main(){
-	int n;
-	string nums;
+	int n;	// 测试数据组数
+	string nums;	// 输入的纸片上的数
 	while(cin>>n>>nums){
-		if(n == 0 && nums == "0") break;
+		if(n == 0 && nums == "0") 
+			break;	// 两个0 表示结束
 		//初始化操作
-		type = 0;
+		type = 0;	// 输出类型
 		minDiff = 9999999;  //注意要够大，要大于999999
 		mp.clear();
-		string sol = "";
+		string sol = "";	// 切分结果
 		
-		dfs(0,0,nums,n,sol);
+		dfs(0, 0, nums, n, sol);
 		
-		if(type == 0)//如果不论怎样切割，分割得到的纸片上数的和都大于目标数
+		if(type == 0)  //如果不论怎样切割，分割得到的纸片上数的和都大于目标数
 			cout<<"error"<<endl;
-		else if(type > 1)//如果有多种不同的切割方式可以得到相同的最优结果
+		else if(type > 1)	//如果有多种不同的切割方式可以得到相同的最优结果
 			cout<<"rejected"<<endl;
 		else
-			cout<<n-minDiff<<mp[minDiff]<<endl;
+			cout<<n - minDiff<<mp[minDiff]<<endl;
 	}
     return 0;
 }

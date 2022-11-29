@@ -27,21 +27,21 @@
 // 最长不下降序列为9->去掉9->原序列变为128456->最长不下降序列为128
 // ->去掉8->原序列为128456->已经去掉了2位数->输出12456
 
-
 #include<bits/stdc++.h>
 using namespace std;
-int main()
-{
+int main(){
 	string s;
-	int k,len,i,n;
-	cin>>n;
-	for(int L=0;L<n;L++)
-	{
-		cin>>s>>k;
-		len=s.length();
+	int k, n;
+	cin>>n; 	// n 组测试数据
+	for(int L = 0; L < n; L++){
+		cin>>s>>k;		// 数字 s  和 需要删除 k 位
+		int len = s.length(); 	// 字符串长度
 		while(k--)
-			for(i=0;i<len;i++)
-				if(s[i+1]<s[i]) {s.erase(i,1);break;}
+			for(int i = 0; i < len; i++)
+				if(s[i+1] < s[i]) { // 如果下一个数字更小
+					s.erase(i, 1);	// 去掉当前数字
+					break;
+				}
 		cout<<s<<endl;
 	}
 	return 0;

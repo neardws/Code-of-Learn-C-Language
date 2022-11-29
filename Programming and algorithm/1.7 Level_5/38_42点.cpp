@@ -14,7 +14,8 @@
 // 玩家需要使用'+'、'-'、'*'、'/'、'('、')'以及这n个数构成一个合法的中缀表达式，并使得该表达式的值为42。
 // n个数之间的顺序可以改变。表达式运算过程中只能出现整数。
 
-// 由于过于抑郁，Marvin无力完成这个游戏，于是来找你帮忙。你的任务是对于给定的n个数，判断他们是否能根据上述游戏规则算出42。
+// 由于过于抑郁，Marvin无力完成这个游戏，于是来找你帮忙。
+// 你的任务是对于给定的n个数，判断他们是否能根据上述游戏规则算出42。
 
 // 输入
 // 第一行为一个数n，1<=n<=6。
@@ -29,53 +30,53 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-vector<int> ele;
-int n;
-bool dfs(int m){
-    if(m == 1){
-        if(ele[0] == 42)
+vector<int> ele;    // 向量容器，存储每个数字
+int n;      // 数字数量
+bool dfs(int m){    // 现在还剩下多少数
+    if(m == 1){     // 只有一个数
+        if(ele[0] == 42)    // 判断是否为42
             return true;
         return false;
     }
-    for(int i = 0; i < m - 1; ++i)
+    for(int i = 0; i < m - 1; ++i)    
         for(int j = i + 1; j < m; ++j){
-            int t1 = ele[i], t2 = ele[j];
-            ele[i] = t1 + t2;
+            int t1 = ele[i], t2 = ele[j];   // 任意取2个数进行运算
+            ele[i] = t1 + t2;    // 加法运算
             ele[j] = ele[m - 1];
+            if(dfs(m - 1))  
+                return true;
+            ele[i] = t1 - t2;    // 减法运算
             if(dfs(m - 1))
                 return true;
-            ele[i] = t1 - t2;
+            ele[i] = t2 - t1;    // 减法运算
             if(dfs(m - 1))
                 return true;
-            ele[i] = t2 - t1;
+            ele[i] = t1 * t2;   // 乘法运算
             if(dfs(m - 1))
                 return true;
-            ele[i] = t1 * t2;
-            if(dfs(m - 1))
-                return true;
-            if(t2 != 0 && abs(t1) % abs(t2) == 0){
-                ele[i] = t1 / t2;
+            if(t2 != 0 && abs(t1) % abs(t2) == 0){  // 分母不为0，同时能除尽
+                ele[i] = t1 / t2;   // 除法运算
                 if(dfs(m - 1))
                     return true;
             }
             else if(t1 != 0 && abs(t2) % abs(t1) == 0){
-                ele[i] = t2 / t1;
+                ele[i] = t2 / t1;   // 除法运算
                 if(dfs(m - 1))
                     return true;
             }
-            ele[i] = t1, ele[j] = t2;
+            ele[i] = t1, ele[j] = t2;   // 回溯
         }
     return false;
 }
 
 int main(){
-    cin >> n;
-    int t;
+    cin >> n;       // 数的个数
+    int t;          // 输入的数据
     for(int i = 0; i < n; ++i){
         cin >> t;
-        ele.push_back(t);
+        ele.push_back(t);   // 将 t 存入 向量 容器
     }
-    if(dfs(n))
+    if(dfs(n))  // 判断是否可以凑成42
         cout << "YES" << endl;
     else
         cout << "NO" << endl;
