@@ -28,13 +28,14 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<vector<int>> edges;  // 存储依赖关系
-vector<int> visited;    // 记录每门课是否访问
+vector < vector < int > > edges;  // 存储依赖关系
+vector <int> visited;    // 记录每门课是否访问
 bool valid = true;  // 假设可以完成所有课程
 
 void dfs(int u) {
     visited[u] = 1;     // 设置已访问
-    for (int v: edges[u]) {     // 遍历每一个完成u 后需要完成的课程
+    for (int i = 0; i <= edges[u].size(); i++) {     // 遍历每一个完成u 后需要完成的课程
+        int v = edges[u][i];
         if (visited[v] == 0) {  // 未访问    
             dfs(v);             
             if (!valid) {
@@ -49,12 +50,12 @@ void dfs(int u) {
     visited[u] = 2;
 }
 
-bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+bool canFinish(int numCourses, vector < vector < int > >& prerequisites) {
     // numCourses 课程数量， prerequisites 依赖关系
     edges.resize(numCourses);   // 更新大小
     visited.resize(numCourses);
-    for (const auto& info: prerequisites) { // 更改依赖的结构
-        edges[info[1]].push_back(info[0]);  // edges[先完成].push_back(后完成)
+    for (int i = 0; i < prerequisites.size(); i ++) { // 更改依赖的结构
+        edges[prerequisites[i][1]].push_back(prerequisites[i][0]);  // edges[先完成].push_back(后完成)
     }
     for (int i = 0; i < numCourses && valid; ++i) { // 遍历每一门课
         if (!visited[i]) {  // 没有访问

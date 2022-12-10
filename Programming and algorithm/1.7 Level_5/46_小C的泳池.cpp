@@ -59,7 +59,7 @@ bool canreach(int t) {    // 判断当前时间是否能到达
         return false;
     memset(reach, 0, sizeof(reach));    // 初始化
     reach[0][0] = 1;    
-    queue<point>myqueues;   // 队列
+    queue < point > myqueues;   // 队列
     myqueues.push(point(0, 0));     // 起点入队
     while (!myqueues.empty()) {     // 队列不为空
         point top = myqueues.front();   

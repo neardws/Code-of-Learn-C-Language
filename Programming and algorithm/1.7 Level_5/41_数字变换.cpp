@@ -37,7 +37,7 @@ struct node{    // 结构体
     int op2, op3, step;   // 操作2，3 的次数， 步数
     node(string aa, int o2, int o3, int ss = 0):a(aa),op2(o2),op3(o3), step(ss){};
 };
-queue<node>q;   // 队列
+queue < node > q;   // 队列
 int main(){
     memset(vis, false, sizeof(vis));    // 初始化
     memset(ans, -1, sizeof(ans));       

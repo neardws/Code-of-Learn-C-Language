@@ -37,7 +37,7 @@ struct path {       // 结构体，记录交换路径
     int pre;        // 前一个节点
     int val;        // 当前取得的价值
 }dp[1005];  // dp[i]表示最后是第i种物品时的最大价值
-map<int, vector<exchangeTo> >tables;    // 存储每个物品可交换物品的信息
+map<int, vector < exchangeTo > >tables;    // 存储每个物品可交换物品的信息
 bool inPath(int n, int k) { // n 为交换目标， k 为被换的物品
     while (k != -1) {   
         if (n == k)     // 判断 n 是否出现在 k 的交换路径中

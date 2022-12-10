@@ -26,7 +26,7 @@ string obj, ori, tep;
 int cnt1, cnt2, n;
 
 void flip(int i){						//改变按钮状态 
-	tep[i]^=1;							//0^1=1  1^1=0
+	tep[i] ^= 1;							//0^1=1  1^1=0
 }
 
 int check() {

@@ -30,7 +30,7 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-vector<int> ele;    // 向量容器，存储每个数字
+vector < int > ele;    // 向量容器，存储每个数字
 int n;      // 数字数量
 bool dfs(int m){    // 现在还剩下多少数
     if(m == 1){     // 只有一个数

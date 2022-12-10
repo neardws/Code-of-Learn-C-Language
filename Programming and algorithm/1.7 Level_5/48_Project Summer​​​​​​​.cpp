@@ -97,7 +97,7 @@ int main(){
                 }
             }
         }
-        queue<Data> q;  // 队列
+        queue < Data > q;  // 队列
         memset(visited, -1, sizeof(visited));   // 初始化
         q.push(Data(ii, jj, 0));    // 起始点入队
         visited[ii][jj] = 0;    // 设置已访问

@@ -32,14 +32,15 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-char map[10][10];
+char cmap[10][10];
 int n, k, ans, vis[10];
 void dfs(int have, int index) {  // 还拥有的棋子，第几层
     if (have == 0)  // 棋子数为0，不再深搜
         ans++;
     for (int j = index; j < n; j++) // j 为地图第几行
         for (int i = 0; i < n; i++)    // i 为地图第几列
-            if (map[j][i] == '#' && !vis[i]) {  // 棋盘区域，且未访问
+            if (cmap[j][i] == '#' && !vis[i]) {  
+                // 棋盘区域，且未访问
                 vis[i] = 1; 
                 dfs(have - 1, j + 1);   // 棋子 -1，层数 +1 
                 vis[i] = 0; //回溯
@@ -50,7 +51,7 @@ int main() {
     // 输入棋盘大小 和 旗子数量， -1，-1 表示输入结束
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
-                cin >> map[i][j];   // 输入地图信息
+                cin >> cmap[i][j];   // 输入地图信息
         ans = 0;   // 棋子摆放方案初始化为0
         dfs(k, 0);  // 还拥有的棋子数量 和 当前层数
         cout << ans << endl;    // 输出方案数
