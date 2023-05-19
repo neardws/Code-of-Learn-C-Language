@@ -1,8 +1,0 @@
-pop
-// min
-// push 5
-// push 2
-// push 3
-// min
-// push 4
-// min
